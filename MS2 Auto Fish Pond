@@ -1,5 +1,6 @@
-while task.wait() do
-
+   getgenv().Autofish = true 
+while task.wait() do 
+        if getgenv().AutoFish then
     
     local args = {
         [1] = workspace.Worlds:FindFirstChild("Summer Fair").Fishing.Pond.Part,
