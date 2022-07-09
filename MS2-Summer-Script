@@ -1,0 +1,116 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("MS2 Summer GUI ", "Ocean")
+
+-- MAIN
+local Main = Window:NewTab("Auto")
+local MainSection = Main:NewSection("Auto")
+local RunService = game:GetService("RunService")
+local Replicated = game:GetService("ReplicatedStorage")
+
+_G.configuration = {
+    fish = false,
+    connection = nil,
+    index = "",
+    castArguments = function(section)
+        local find = workspace.Worlds["Summer Fair"].Fishing:FindFirstChild(section)
+        if not find then
+            warn("invalid fishing area")
+            return
+        end
+        local part = find:FindFirstChild("Part")
+        return {part, part.Position}
+    end
+}
+
+MainSection:NewToggle("Auto Fish", "Makes you automaically fish in the based on your section choise", function(boolean)
+    _G.configuration.fish = boolean
+    _G.configuration.connection = RunService.RenderStepped:Connect(function()
+        if _G.configuration.fish then
+            Replicated.Events.FishingCast:FireServer(unpack(_G.configuration.castArguments(_G.configuration.index)))
+        else
+            _G.configuration.connection:Disconnect()
+            _G.configuration.connection = nil
+        end
+    end)
+end)
+
+MainSection:NewDropdown("Fish Selection", "Choose a fish for Auto Fish", {"Pond", "River", "Ocean", "Mountain"}, function(choice)
+    _G.configuration.index = choice
+end)
+
+-- Other
+local Other = Window:NewTab("Scripts")
+local OtherSection = Other:NewSection("Scripts") 
+
+OtherSection:NewButton("System Exodus", "System Exodus Script", function()
+    loadstring(game:HttpGet("https://system-exodus.com/scripts/MiningSimulator/MiningSimulator2.lua", true))()
+end)
+
+OtherSection:NewButton("Zeerox Script", "Zeerox script", function()
+    loadstring(game:HttpGet'https://raw.githubusercontent.com/RunDTM/miningsim2/main/rewrite.lua')()
+end) 
+
+OtherSection:NewButton("CMD-X", "Admin Script", function()
+    loadstring(game:HttpGet'https://raw.githubusercontent.com/CMD-X/CMD-X/master/CMD-X')()
+end)
+
+OtherSection:NewTextBox("Huge Games Key", "heyyyy lol", function(text)
+    _G.AuthKey = text
+    loadstring(game:HttpGet("https://HugeGames.io/ms2"))()
+end)
+
+-- Discord
+local Discord = Window:NewTab("Discord Webhook")
+local DiscordSection = Discord:NewSection("Webhook")
+
+DiscordSection:NewTextBox("Discord Webhook", "hey lol", function(text)
+    _G.Webhook = text
+    _G.Discord_UserID = "" -- UID To Ping; leave as "" to not ping
+    _G.TrueChance = true -- false = 0.001%; true = 1 in 400k
+    _G.Tiers = { --Tiers you care about
+        ['Common'] = false;
+        ['Unique'] = false;
+        ['Rare'] = false;
+        ['Epic'] = false;
+        ['Legendary'] = true;
+        ['Secret'] = true;
+    }
+    _G.Exclusions = {
+        -- "Unicorn"; -- remove the "--" (uncomment) to add it to the list
+        -- "Glitch";
+    }
+    
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/iTzGerard/MiningSimulator2/main/Hatch_Webhook'))()
+end)
+
+-- Miscellaneous
+local Misc = Window:NewTab("Miscellaneous")
+local MiscSection = Misc:NewSection("Misc") 
+
+MiscSection:NewButton("Anti-Afk", "Lol wont dc after 20", function()
+wait(0.5)local ba=Instance.new("ScreenGui")
+ local ca=Instance.new("TextLabel")local da=Instance.new("Frame")
+local _b=Instance.new("TextLabel")local ab=Instance.new("TextLabel")ba.Parent=game.CoreGui
+ba.ZIndexBehavior=Enum.ZIndexBehavior.Sibling;ca.Parent=ba;ca.Active=true
+ca.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471)ca.Draggable=true
+ca.Position=UDim2.new(0.698610067,0,0.098096624,0)ca.Size=UDim2.new(0,304,0,52)
+ca.Font=Enum.Font.SourceSansSemibold;ca.Text="Anti Afk Kick Script"ca.TextColor3=Color3.new(0,1,1)
+ca.TextSize=22;da.Parent=ca
+da.BackgroundColor3=Color3.new(0.196078,0.196078,0.196078)da.Position=UDim2.new(0,0,1.0192306,0)
+da.Size=UDim2.new(0,304,0,107)_b.Parent=da
+_b.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471)_b.Position=UDim2.new(0,0,0.800455689,0)
+_b.Size=UDim2.new(0,304,0,21)_b.Font=Enum.Font.Arial;_b.Text="Made by XxSwordmaster_2xX"
+_b.TextColor3=Color3.new(1,1,1)_b.TextSize=20;ab.Parent=da
+ab.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471)ab.Position=UDim2.new(0,0,0.158377379,0)
+ab.Size=UDim2.new(0,304,0,44)ab.Font=Enum.Font.ArialBold;ab.Text="Status: Script Started"
+ab.TextColor3=Color3.new(1,1,1)ab.TextSize=20;local bb=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+bb:CaptureController()bb:ClickButton2(Vector2.new())
+ab.Text="You went idle and ROBLOX tried to kick you but we reflected it!"wait(2)ab.Text="Script Re-Enabled"end)
+end) 
+
+MiscSection:NewKeybind("Hide UI", "Choose Keybind", Enum.KeyCode.F, function()
+	Library:ToggleUI()
+end) 
+
+
