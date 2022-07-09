@@ -1,7 +1,5 @@
-   getgenv().Autofish = true 
 while task.wait() do 
-        if getgenv().AutoFish then
-    
+       
     local args = {
         [1] = workspace.Worlds:FindFirstChild("Summer Fair").Fishing.Pond.Part,
         [2] = Vector3.new(-2914.73706, 0.700042725, 255.070435)
