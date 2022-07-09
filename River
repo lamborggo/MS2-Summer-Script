@@ -1,8 +1,12 @@
-getgenv().Autofish = false
-if (NewToggle) = true
+   If State then
+    getgenv().Autofish = true
 while task.wait() do
     if getgenv().Autofish then
       game:GetService("ReplicatedStorage").Events.FishingCast:FireServer(workspace.Worlds:FindFirstChild("Summer Fair").Fishing.River.Part,Vector3.new(-2923.441650390625, 1.200042724609375, 240.5873565673828))
+    else
+     getgenv().Autofish = false
+ while task.wait() do
+     if getgenv().Autofish then
+    game:GetService("ReplicatedStorage").Events.FishingCast:FireServer(workspace.Worlds:FindFirstChild("Summer Fair").Fishing.River.Part,Vector3.new(-2923.441650390625, 1.200042724609375, 240.5873565673828))
     end
 end
-end) 
