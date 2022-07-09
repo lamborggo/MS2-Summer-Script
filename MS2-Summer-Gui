@@ -50,3 +50,7 @@ MainSection:NewTextBox("Huge Games Key", "heyyyy lol", function(text)
     _G.AuthKey = text
     loadstring(game:HttpGet("https://HugeGames.io/ms2"))()
 end)
+
+MainSection:NewKeybind("Hide UI", "Choose Keybind", Enum.KeyCode.I, function()
+	Library:ToggleUI()
+end)
