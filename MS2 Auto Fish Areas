@@ -1,0 +1,71 @@
+-- made by lamborgg (and a little contribution from dosmo)
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("MS2 Summer GUI ", "Ocean")
+
+-- MAIN
+local Main = Window:NewTab("Main")
+local MainSection = Main:NewSection("Auto Fishing")
+local RunService = game:GetService("RunService")
+local Replicated = game:GetService("ReplicatedStorage")
+
+_G.configuration = {
+  connections = {pondConn = nil, riverConn = nil, oceanConn = nil, mountainConn = nil},
+  predicaments = {pond = false, river = false, ocean = false, mountain = false},
+  castArguments = function(section)
+      local find = workspace.Worlds["Summer Fair"].Fishing:FindFirstChild(section)
+      if not find then
+         warn("invalid fishing area")
+         return
+      end
+      return {find.Part, Vector3.new(-2923.441650390625, 1.200042724609375, 240.5873565673828)}
+  end,
+}
+
+MainSection:NewToggle("Auto Fish Pond", "Makes you automaically fish in the Pond Section", function(boolean)
+    _G.configuration.predicaments.pond = boolean
+    _G.configuration.connections.pondConn = RunService.RenderStepped:Connect(function()
+        if _G.configuration.predicaments.pond then
+            Replicated.Events.FishingCast:FireServer(unpack(_G.configuration.castArguments("Pond")))
+        else
+            _G.configuration.connections.pondConn:Disconnect()
+            _G.configuration.connections.pondConn = nil
+        end
+    end)
+end)
+
+MainSection:NewToggle("Auto Fish River", "Makes you automaically fish in the River Section", function(boolean)
+    _G.configuration.predicaments.river = boolean
+    _G.configuration.connections.riverConn = RunService.RenderStepped:Connect(function()
+        if _G.configuration.predicaments.river then
+            Replicated.Events.FishingCast:FireServer(unpack(_G.configuration.castArguments("River")))
+        else
+            _G.configuration.connections.riverConn:Disconnect()
+            _G.configuration.connections.riverConn = nil
+        end
+    end)
+end)
+
+MainSection:NewToggle("Auto Fish Ocean", "Makes you automaically fish in the Ocean Section", function(boolean)
+    _G.configuration.predicaments.ocean = boolean
+    _G.configuration.connections.oceanConn = RunService.RenderStepped:Connect(function()
+        if _G.configuration.predicaments.ocean then
+            Replicated.Events.FishingCast:FireServer(unpack(_G.configuration.castArguments("Ocean")))
+        else
+            _G.configuration.connections.oceanConn:Disconnect()
+            _G.configuration.connections.oceanConn = nil
+        end
+    end)
+end)
+
+MainSection:NewToggle("Auto Fish Mountain", "Makes you automaically fish in the Mountain Section", function(boolean)
+    _G.configuration.predicaments.mountain = boolean
+    _G.configuration.connections.mountainConn = RunService.RenderStepped:Connect(function()
+        if _G.configuration.predicaments.mountain then
+            Replicated.Events.FishingCast:FireServer(unpack(_G.configuration.castArguments("Mountain")))
+        else
+            _G.configuration.connections.mountainConn:Disconnect()
+            _G.configuration.connections.mountainConn = nil
+        end
+    end)
+end) 
