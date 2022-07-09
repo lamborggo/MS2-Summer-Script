@@ -51,6 +51,27 @@ MainSection:NewTextBox("Huge Games Key", "heyyyy lol", function(text)
     loadstring(game:HttpGet("https://HugeGames.io/ms2"))()
 end)
 
-MainSection:NewKeybind("Hide UI", "Choose Keybind", Enum.KeyCode.I, function()
+MainSection:NewTextBox("Discord Webhook", "hey lol", function(text)
+    _G.Webhook = text
+    _G.Discord_UserID = "" -- UID To Ping; leave as "" to not ping
+    _G.TrueChance = true -- false = 0.001%; true = 1 in 400k
+    _G.Tiers = { --Tiers you care about
+        ['Common'] = false;
+        ['Unique'] = false;
+        ['Rare'] = false;
+        ['Epic'] = false;
+        ['Legendary'] = true;
+        ['Secret'] = true;
+    }
+    _G.Exclusions = {
+        -- "Unicorn"; -- remove the "--" (uncomment) to add it to the list
+        -- "Glitch";
+    }
+    
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/iTzGerard/MiningSimulator2/main/Hatch_Webhook'))()
+end)
+
+Section:NewKeybind("KeybindText", "KeybindInfo", Enum.KeyCode.F, function()
 	Library:ToggleUI()
 end)
+
